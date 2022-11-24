@@ -1,0 +1,72 @@
+from random import randint
+import time
+class Node:
+    def __init__(self,key) -> None:
+        self.key = key
+        self.right = None
+        self.left = None
+        self.parent = None
+def insert_tree(root,node):
+    if root is None:
+            root = node
+    else:
+        if root.key > node.key:
+            if root.left is None:
+                    root.left = node
+            else:
+                insert_tree(root.left,node)
+        elif root.key < node.key:
+            if root.right is None:
+                root.right = node
+            else:
+                insert_tree(root.right,node)
+def sort_max(root):
+    if root != None:
+        sort_max(root.left)
+        print(root.key)
+        sort_max(root.right)
+def sort_min(root):
+    if root != None:
+        sort_min(root.right)
+        print(root.key)
+        sort_min(root.left)
+def search_min(root):
+    if root.left is None:
+        return root.key
+    else:
+        return search_min(root.left)
+def search_max(root):
+    if root.right is None:
+        return root.key
+    else:
+        return search_max(root.right)
+
+tree = Node(46)
+mas=[46]
+"""
+insert_tree(tree,Node(3))
+insert_tree(tree,Node(1))
+insert_tree(tree,Node(6))
+insert_tree(tree,Node(4))
+insert_tree(tree,Node(7))
+insert_tree(tree,Node(10))
+insert_tree(tree,Node(14))
+insert_tree(tree,Node(13))
+q=search_min(tree)
+print(q)
+"""
+start = time.time()
+for i in range(10000):
+    insert_tree(tree,Node(randint(10,92)))
+sort_max(tree)
+end = time.time()
+result1 = end - start
+start = time.time()
+for i in range(10000):
+    mas.append(randint(10,92))
+mas.sort()
+for element in mas:
+    print(element)
+end = time.time()
+result2 = end - start
+print("binary_sort = {arg1:9.5f} , massiv_sort = {arg2:9.5f}".format(arg1 = result1, arg2 = result2))
